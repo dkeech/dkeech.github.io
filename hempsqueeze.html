@@ -27,6 +27,7 @@
         }
         .hs-links ul {
             list-style-type: none;
+            padding-inline-start: 0;
         }
         .hs-links li {display: inline; margin: 20px;}
         .hs-links a {
@@ -168,6 +169,9 @@
         .hs-about-circle3{
             background-image: url("/hempsqueeze/circle3.png")
         }
+        #footer{display: flex; flex-direction:column; justify-content: center;align-items:center;}
+        #footer h2{text-align:center;}
+        .hs-footer-form{max-width: 350px;}
     </style>
     <div class="hs-nav">
         <div class="hs-logo">
@@ -244,7 +248,10 @@
         <div class="hs-about-circle2"> <img alt="Leg Sleeve" src="/hempsqueeze/leg group.png"></div>
         <div class="hs-about-circle3"><h2>HISTORY<br>OF<br>HEMP</h2></div>
     </div>
-    <div id="footer"></div>
+    <div id="footer">
+        <h2>Join Our Mailing List</h2>
+        <div class="hs-footer-form"><input type="text" placeholder="email address"></input><button>Join</button></div>
+    </div>
     <script>
         var header = document.querySelector(".hs-nav");
         window.onscroll = function(){navFunction()};
