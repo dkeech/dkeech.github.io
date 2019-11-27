@@ -9,7 +9,11 @@
 </head>
 <body>
     <style>
-        body{padding: 0; margin: 0; font-family: Roboto, sans-serif;}
+        @font-face {
+            font-family: 'AvenirNext';
+            src: url('hempsqueeze/AvenirNextLTPro-Regular.otf');
+        }
+        body{padding: 0; margin: 0; font-family: AvenirNext, sans-serif;}
         .hs-nav{
             width:100%;
             background-color: white;
@@ -50,7 +54,7 @@
             justify-content: center;
             align-items: flex-start;
             height:300px;
-            width:100vw;
+            /* width:100vw; */
             background-image: url("/hempsqueeze/background-plants.png");
             background-size: cover;
             background-position: center;
@@ -75,21 +79,22 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
-            width: 100%;
+            /* width: 100%; */
             max-width: 1150px;
         }
         #hs-products img{ display: inline; margin: 0px 30px 0 30px; height: 330px; transform: translateY(-50px)}
         #hs-natural {
-            width: 100%;
+            /* width: 100%; */
             height: 400px;
             background-image: url("/hempsqueeze/barbell.png");
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center
         }
         #hs-life{
             height: 375px;
-            width: 100%;
+            /* width: 100%; */
             background: linear-gradient(0deg, #184483, #1b4f9a);
             padding: 20px;
         }
@@ -97,7 +102,7 @@
         #hs-infused{
             background-color: #404040;
             height: 125px;
-            width: 100%;
+            /* width: 100%; */
             padding: 20px;
             display: flex;
             justify-content: center; align-content: center;}
@@ -174,6 +179,7 @@
     background-repeat: repeat;
     background-position: center center;
     opacity: 1;
+    height: 600px;
         }
         #footer h2{text-align:center; font-size: 3em; font-weight: 300;text-transform: uppercase;color: black;}
         .hs-footer-form{max-width: 350px;}
@@ -191,6 +197,12 @@
             color: white;
             padding: 10px 20px;
             text-transform: uppercase;
+        }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border:none;
+
         }
     </style>
     <div class="hs-nav">
@@ -269,7 +281,8 @@
         <a href="https://foundershemp.com/history-of-hemp/" target="_blank"><div class="hs-about-circle3"><h2>HISTORY<br>OF<br>HEMP</h2></div></a>
     </div>
     <div id="footer">
-        <div class="gdlr-core-text-box-item-content" style="color: #2b7844;"><h2>Join Our Mailing List</h2>
+        <iframe src="http://e1w.6f5.myftpupload.com/hemp-squeeze/" scrolling="no"></iframe>
+        <div class="gdlr-core-text-box-item-content" style="display: none; color: #2b7844;"><h2>Join Our Mailing List</h2>
             <p>Stay on top of the latest news about Hemp Squeeze.</p>
             
             <p>
@@ -294,6 +307,7 @@
             header.classList.remove("sticky");
         
         }}
+        
     </script>
 </body>
 </html>
