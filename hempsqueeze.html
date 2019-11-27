@@ -169,9 +169,29 @@
         .hs-about-circle3{
             background-image: url("/hempsqueeze/circle3.png")
         }
-        #footer{display: flex; flex-direction:column; justify-content: center;align-items:center;}
-        #footer h2{text-align:center;}
+        #footer{display: flex; flex-direction:column; justify-content: center;
+        align-items:center;background-image: url(https://everythinghempstore.com/wp-content/plugins/goodlayers-core/include/images/pattern/pattern-8.png); */
+    background-repeat: repeat;
+    background-position: center center;
+    opacity: 1;
+        }
+        #footer h2{text-align:center; font-size: 3em; font-weight: 300;text-transform: uppercase;color: black;}
         .hs-footer-form{max-width: 350px;}
+        #footer p {font-size: 1.1em; text-align: center;}
+        #footer input:not([type="button"]):not([type="submit"])  {
+            border-color: #d7d7d7;
+            color: #4e4e4e;
+            padding: 20px 10px;
+            text-transform:uppercase;
+            text-align:center; 
+            width: 360px;
+        }
+        #footer input[type="submit"] {
+            background-color: #2b7844;
+            color: white;
+            padding: 10px 20px;
+            text-transform: uppercase;
+        }
     </style>
     <div class="hs-nav">
         <div class="hs-logo">
@@ -249,8 +269,20 @@
         <div class="hs-about-circle3"><h2>HISTORY<br>OF<br>HEMP</h2></div>
     </div>
     <div id="footer">
-        <h2>Join Our Mailing List</h2>
-        <div class="hs-footer-form"><input type="text" placeholder="email address"></input><button>Join</button></div>
+        <div class="gdlr-core-text-box-item-content" style="color: #2b7844;"><h2>Join Our Mailing List</h2>
+            <p>Stay on top of the latest news, new products and great deals at EverythingHempStore.com.</p>
+            
+            <p>
+                <input type="email" name="EMAIL" placeholder="Your email address" required="">
+            </p>
+              
+              <p>
+                <input type="submit" value="Subscribe">
+            </p>
+            
+             
+            </div></div><label style="display: none !important;">Leave this field empty if you're human: <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off"></label><input type="hidden" name="_mc4wp_timestamp" value="1574822277"><input type="hidden" name="_mc4wp_form_id" value="2954"><input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-1"><div class="mc4wp-response"></div></form><!-- / MailChimp for WordPress Plugin -->
+            </div>
     </div>
     <script>
         var header = document.querySelector(".hs-nav");
