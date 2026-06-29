@@ -195,7 +195,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 <div class="panel reveal"><div class="legend"><div class="lg"><span class="sw me"></span>Me</div><div class="lg"><span class="sw pr"></span>Peers</div><div class="ptitle" style="margin:0 0 0 auto">Non-merge commits</div></div>
 <div class="chart" data-chart="github"></div></div>
 <div class="panel reveal mt14"><table class="tbl"><thead><tr data-table-head="github"><th class="l">Developer</th></tr></thead><tbody data-table-body="github"></tbody></table>
-<div class="fn"><b>‡ Apples to apples.</b> “Commits” counts non-merge commits only. Merge commits are auto-generated when a pull request lands, so they’re excluded — otherwise my PR workflow would add ~330 commits that peers committing directly to <i>main</i> never accrue. Non-merge commits compare hand-written implementation work on equal footing.</div></div>
+<div class="fn"><b>‡ Apples to apples.</b> “Commits” counts non-merge commits only. Merge commits are auto-generated when a pull request lands, so they’re excluded — otherwise my PR workflow would add ~330 commits that peers committing directly to <i>main</i> never accrue. Non-merge commits compare hand-written implementation work on equal footing. This only compares GitHub behavior; it does not include commits made to Bitbucket, or features that were not saved to a repo, such as HubSpot page builds and module work.</div></div>
 </section>
 
 <section class="sect" id="harvest">
@@ -239,8 +239,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 <div class="exp" data-exp-id="p3"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">Long Island</span><span class="tag">LP · FORM SOURCE</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">Added LP thank-you URL behavior, Gravity Forms entry IDs in thank-you flows, form source/origin tracking, and LP replacement logic moved out of the theme into the plugin layer.</div></div></div>
 <div class="exp" data-exp-id="p4"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">Joliet</span><span class="tag">PAYMENT PORTAL</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">Added payment portal behavior and shared form-flow improvements, including changing invoice-number handling so the field was no longer required in the Joliet payment portal.</div></div></div>
 <div class="exp" data-exp-id="p5"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">Richmond</span><span class="tag">CHATBOT</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">Added Richmond-specific front-page chatbot placement so the chatbot could be enabled for that site without changing global Breeze behavior.</div></div></div>
-<div class="exp" data-exp-id="p6"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">SE Wisconsin</span><span class="tag">SETUP</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">Added the Southeastern Wisconsin group plugin as a dedicated place for group-specific functionality and future site behavior.</div></div></div>
-<div class="exp" data-exp-id="p7"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">St. Louis / Kansas City</span><span class="tag">AUCTION WORKFLOW</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">Built the auction workflow, including auction page functionality and styling, custom auction user login, email harvesting, winner-email updates, reset improvements, dashboard user info, feature toggles, and auction-page exit-popup controls.</div></div></div>
+<div class="exp" data-exp-id="p6"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">St. Louis / Kansas City</span><span class="tag">AUCTION WORKFLOW</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">Built the auction workflow, including auction page functionality and styling, custom auction user login, email harvesting, winner-email updates, reset improvements, dashboard user info, feature toggles, and auction-page exit-popup controls.</div></div></div>
 </div>
 <div class="slab">Significant client-site features shipped in 2026</div>
 <div class="reveal">
@@ -251,6 +250,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 <div class="exp" data-exp-id="c5"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">Baker Home Exteriors</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">URL-parameter component swapping, nearest-city behavior, eyebrow banner support, Google data-layer email/phone capture, Crazy Egg support, dynamic phone display and city passthrough to thank-you pages.</div></div></div>
 <div class="exp" data-exp-id="c6"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">Raleigh Paving</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">Front-page makeover, free-consultation updates, LP mobile refinements, form URL-parameter handling, stepped-form client routing, font optimization and fatal-error/footer fixes.</div></div></div>
 <div class="exp" data-exp-id="c7"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">Acme Stove</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">Added an FAQ page and alert banner, patched PHP 8 / server-mailer issues, fixed individual product display behavior and resolved persistent navigation issues.</div></div></div>
+<div class="exp" data-exp-id="c8"><div class="exphead" data-expand><span class="expdot"></span><span class="exptitle">TransmetriQ</span><span class="expchev">›</span></div><div class="expbody"><div class="expinner">Built HubSpot pages and custom HubSpot modules, including reusable page sections and module fields for Reporting &amp; Analytics and case-study experiences. This work matters even where it is not fully reflected in GitHub commit counts.</div></div></div>
 </div>
 </section>
 
@@ -374,7 +374,6 @@ function renderHarvest() {
 function renderBasecamp() {
   const me = data.basecamp[0];
   const peers = data.basecamp.filter(row => !row.isMe);
-  const peerRecords = avg(peers, 'records');
   const peerComments = avg(peers, 'comments');
   const peerDays = avg(peers, 'days');
   const peerProjects = avg(peers, 'projects');
@@ -387,15 +386,14 @@ function renderBasecamp() {
   })).join('');
 
   tableHeader('basecamp', [
-    { label: 'Records', key: 'records' },
     { label: 'Comments', key: 'comments' },
     { label: 'Active days', key: 'days' },
     { label: 'Projects', key: 'projects' }
   ]);
   const rows = [
-    { cls: 'me', name: 'Me', cells: [me.records, me.comments, me.days, me.projects] },
-    { cls: 'avg', name: 'Peer average', cells: [peerRecords.toFixed(1), peerComments.toFixed(1), peerDays.toFixed(1), peerProjects.toFixed(1)] },
-    { cls: 'mult', name: 'My multiple', cells: [(me.records / peerRecords).toFixed(1) + '×', (me.comments / peerComments).toFixed(1) + '×', (me.days / peerDays).toFixed(1) + '×', (me.projects / peerProjects).toFixed(1) + '×'] }
+    { cls: 'me', name: 'Me', cells: [me.comments, me.days, me.projects] },
+    { cls: 'avg', name: 'Peer average', cells: [peerComments.toFixed(1), peerDays.toFixed(1), peerProjects.toFixed(1)] },
+    { cls: 'mult', name: 'My multiple', cells: [(me.comments / peerComments).toFixed(1) + '×', (me.days / peerDays).toFixed(1) + '×', (me.projects / peerProjects).toFixed(1) + '×'] }
   ];
   tableRows('basecamp', rows);
 }
