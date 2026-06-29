@@ -52,6 +52,8 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 .kpi .l{margin-top:9px;color:var(--muted);font-size:12.5px}
 .kpi .t{margin-top:11px;font:600 11px 'IBM Plex Mono';color:var(--good);display:inline-block}
 .srcgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.source-label{display:flex;align-items:center;gap:12px;margin:32px 0 12px;font:600 11px 'IBM Plex Mono';letter-spacing:.18em;text-transform:uppercase;color:var(--me2)}
+.source-label::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(142,195,255,.26),transparent)}
 .srccard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;transition:.18s;display:flex;flex-direction:column;gap:8px}
 .srccard:hover{border-color:var(--line2);background:var(--panel2);transform:translateY(-2px)}
 .srccard .sk{font:600 11px 'IBM Plex Mono';letter-spacing:.14em;text-transform:uppercase;color:var(--me2)}
@@ -146,8 +148,9 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 #overview .kpi:nth-child(2),#overview .kpi:nth-child(2)::before{animation-delay:.76s}
 #overview .kpi:nth-child(3),#overview .kpi:nth-child(3)::before{animation-delay:.97s}
 #overview .kpi:nth-child(4),#overview .kpi:nth-child(4)::before{animation-delay:1.18s}
-#overview .srcgrid,.sect:not(#overview){opacity:0;animation:introFadeUp .6s cubic-bezier(.2,.8,.2,1) forwards}
+#overview .source-label,#overview .srcgrid,.sect:not(#overview){opacity:0;animation:introFadeUp .6s cubic-bezier(.2,.8,.2,1) forwards}
 #overview .srcgrid{animation-delay:1.55s}.sect:not(#overview){animation-delay:1.78s}
+#overview .source-label{animation-delay:1.45s}
 @media (max-width:920px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}.nav{flex-direction:row;flex-wrap:wrap}.kgrid,.srcgrid,.cmps{grid-template-columns:repeat(2,1fr)}.main{padding:24px}}
 
 @media (max-width:600px){
@@ -196,7 +199,8 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 <div class="kpi"><div class="n">78<small>%</small></div><div class="l">Utilization</div><div class="t">Top 5 of 93 company-wide</div></div>
 <div class="kpi"><div class="n">1,422</div><div class="l">Billable hours</div><div class="t">#2 of 93 company-wide</div></div>
 </div>
-<div class="reveal srcgrid mt16">
+<div class="source-label">Sources</div>
+<div class="reveal srcgrid">
 <div class="srccard" data-target="github"><div class="sk">GitHub</div><div class="sv">1,462 commits · 89 repos</div><div class="sd">Sustained output across 207 active days in the trimarkdigital org.</div><div class="sgo">View source →</div></div>
 <div class="srccard" data-target="harvest"><div class="sk">Harvest</div><div class="sv">1,422 billable · 78% util</div><div class="sd">#2 of 93 in billable hours; 1st in the development peer group.</div><div class="sgo">View source →</div></div>
 <div class="srccard" data-target="basecamp"><div class="sk">Basecamp</div><div class="sv">230 records · 19 projects</div><div class="sd">3.4× the peer average in authored project activity.</div><div class="sgo">View source →</div></div>
