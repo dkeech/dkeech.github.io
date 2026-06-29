@@ -148,10 +148,6 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 #overview .kpi:nth-child(4),#overview .kpi:nth-child(4)::before{animation-delay:1.18s}
 #overview .srcgrid,.sect:not(#overview){opacity:0;animation:introFadeUp .6s cubic-bezier(.2,.8,.2,1) forwards}
 #overview .srcgrid{animation-delay:1.55s}.sect:not(#overview){animation-delay:1.78s}
-@media (prefers-reduced-motion:reduce){
-  .side,.topbar,#overview .lede,#overview .kpi,#overview .srcgrid,.sect:not(#overview){opacity:1;transform:none;filter:none;animation:none}
-  #overview .kpi::before{display:none}
-}
 @media (max-width:920px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}.nav{flex-direction:row;flex-wrap:wrap}.kgrid,.srcgrid,.cmps{grid-template-columns:repeat(2,1fr)}.main{padding:24px}}
 
 @media (max-width:600px){
