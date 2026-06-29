@@ -103,7 +103,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 .cmp .big small{font-size:16px;color:var(--muted)}
 .cmp.acc .big{color:var(--me2)}
 .cmp .cl{color:var(--muted);font-size:12.5px;margin:8px 0 14px}
-.cmp .cp{font-size:12px;color:var(--faint);border-top:1px dashed var(--line2);padding-top:11px;display:flex;justify-content:space-between;gap:10px}
+.cmp .cp{font-size:12px;color:var(--faint);border-top:1px dashed var(--line2);padding-top:11px;display:grid;grid-template-columns:1fr auto;gap:5px 10px}
 .cmp .cp b{color:var(--good);font-family:'IBM Plex Mono';font-weight:600}
 .pills{display:flex;gap:10px;flex-wrap:wrap}
 .pill{display:flex;align-items:center;gap:9px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:9px 15px;font-size:12.5px;color:var(--ink)}
@@ -211,16 +211,16 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 </section>
 
 <section class="sect" id="harvest">
-<div class="shead reveal"><div class="eyebrow">01 · Source</div><h2 class="h2">Harvest — hours &amp; utilization</h2><p class="sub">Full-year tracked time. This is where implementation work meets business value: a large amount of tracked, billable client work with strong utilization.</p></div>
+<div class="shead reveal"><div class="eyebrow">01 · Source</div><h2 class="h2">Harvest — hours &amp; utilization</h2><p class="sub">Full-year tracked time. This is where implementation work meets business value: a large amount of tracked, billable client work with strong utilization, compared against both development peers and all Trimark.</p></div>
 <div class="cmps reveal">
-<div class="cmp acc"><div class="big">1,630<small> h</small></div><div class="cl">Total hours logged</div><div class="cp"><span>Peer avg ≈ 1,118 h</span><b>+46%</b></div></div>
-<div class="cmp acc"><div class="big">78.1<small>%</small></div><div class="cl">Utilization</div><div class="cp"><span>Peer avg ≈ 53.5%</span><b>+24.6 pts</b></div></div>
-<div class="cmp acc"><div class="big">1,422<small> h</small></div><div class="cl">Billable hours</div><div class="cp"><span>Peer avg ≈ 901 h</span><b>+58%</b></div></div>
+<div class="cmp acc"><div class="big">1,630<small> h</small></div><div class="cl">Total hours logged</div><div class="cp"><span>Peer avg ≈ 1,118 h</span><b>+46%</b><span>All Trimark avg ≈ 952 h</span><b>+71%</b></div></div>
+<div class="cmp acc"><div class="big">78.1<small>%</small></div><div class="cl">Utilization</div><div class="cp"><span>Peer avg ≈ 53.5%</span><b>+24.6 pts</b><span>All Trimark avg ≈ 46.1%</span><b>+32.0 pts</b></div></div>
+<div class="cmp acc"><div class="big">1,422<small> h</small></div><div class="cl">Billable hours</div><div class="cp"><span>Peer avg ≈ 901 h</span><b>+58%</b><span>All Trimark avg ≈ 687 h</span><b>+107%</b></div></div>
 </div>
 <div class="pills reveal mt16"><div class="pill"><b>#2</b> Billable hours <span class="pr">OF 93</span></div><div class="pill"><b>#5</b> Total hours <span class="pr">OF 93</span></div><div class="pill"><b>#5</b> Utilization <span class="pr">OF 93</span></div><div class="pill"><b>87.2%</b> Billable share <span class="pr">MEDIAN 73.2%</span></div></div>
-<div class="panel reveal mt16"><div class="ptitle">Billable hours · active peer set</div><div class="chart" data-chart="harvest"></div></div>
+<div class="panel reveal mt16"><div class="ptitle">Billable hours · peers and all Trimark</div><div class="chart" data-chart="harvest"></div></div>
 <div class="panel reveal mt14"><table class="tbl"><thead><tr data-table-head="harvest"><th class="l">Developer</th></tr></thead><tbody data-table-body="harvest"></tbody></table>
-<div class="fn">Peer average uses the active development peer set — Robert, Daniel and Juan. <i>Jon Hall</i> left months ago and is shown dimmed for context; <i>Eric Miller</i> sits outside the named peer group.</div></div>
+<div class="fn">Peer average uses the active development peer set — Robert, Daniel and Juan. All Trimark average uses the full 93-person Harvest export. <i>Jon Hall</i> left months ago and is shown dimmed for context; <i>Eric Miller</i> sits outside the named peer group.</div></div>
 </section>
 
 <section class="sect" id="basecamp">
@@ -296,6 +296,7 @@ const data = {
     { name: 'Jon Hall', departed: true, total: 800.5, billable: 616.4, util: 38.338 },
     { name: 'Juan Ibanes', peer: true, total: 730.6, billable: 518.5, util: 34.990 }
   ],
+  harvestAllTrimark: { count: 93, total: 951.944, billable: 686.589, util: 46.082 },
   basecamp: [
     { name: 'Dan Keech', isMe: true, records: 230, comments: 227, days: 31, projects: 19 },
     { name: 'Robert Povelones', records: 52, comments: 50, days: 18, projects: 10 },
@@ -367,12 +368,14 @@ function renderGithub() {
 function renderHarvest() {
   const me = data.harvest[0];
   const peers = data.harvest.filter(row => row.peer);
+  const allTrimark = data.harvestAllTrimark;
   const peerTotal = avg(peers, 'total');
   const peerBillable = avg(peers, 'billable');
   const peerUtil = avg(peers, 'util');
   const bars = [
     { name: 'Me', value: f1(me.billable), width: '100%', me: 'me' },
-    { name: 'Peer average', value: f1(peerBillable), width: (peerBillable / me.billable * 100).toFixed(1) + '%' }
+    { name: 'Peer average', value: f1(peerBillable), width: (peerBillable / me.billable * 100).toFixed(1) + '%' },
+    { name: 'All Trimark average', value: f1(allTrimark.billable), width: (allTrimark.billable / me.billable * 100).toFixed(1) + '%' }
   ];
   document.querySelector('[data-chart="harvest"]').innerHTML = bars.map(chartRow).join('');
 
@@ -384,7 +387,9 @@ function renderHarvest() {
   const rows = [
     { cls: 'me', name: 'Me', cells: [f1(me.total), f1(me.billable), me.util.toFixed(1) + '%'] },
     { cls: 'avg', name: 'Peer average', cells: [f1(peerTotal), f1(peerBillable), peerUtil.toFixed(1) + '%'] },
-    { cls: 'mult', name: 'Δ vs avg', cells: ['+' + Math.round((me.total / peerTotal - 1) * 100) + '%', '+' + Math.round((me.billable / peerBillable - 1) * 100) + '%', '+' + (me.util - peerUtil).toFixed(1) + ' pts'] }
+    { cls: 'avg', name: 'All Trimark average', sub: allTrimark.count + ' people', cells: [f1(allTrimark.total), f1(allTrimark.billable), allTrimark.util.toFixed(1) + '%'] },
+    { cls: 'mult', name: 'Δ vs peer avg', cells: ['+' + Math.round((me.total / peerTotal - 1) * 100) + '%', '+' + Math.round((me.billable / peerBillable - 1) * 100) + '%', '+' + (me.util - peerUtil).toFixed(1) + ' pts'] },
+    { cls: 'mult', name: 'Δ vs all Trimark', cells: ['+' + Math.round((me.total / allTrimark.total - 1) * 100) + '%', '+' + Math.round((me.billable / allTrimark.billable - 1) * 100) + '%', '+' + (me.util - allTrimark.util).toFixed(1) + ' pts'] }
   ];
   tableRows('harvest', rows);
 }
