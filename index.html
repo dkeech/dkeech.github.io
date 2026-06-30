@@ -198,8 +198,8 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 <div class="reveal kgrid mt16">
 <div class="kpi"><div class="n">78<small>%</small></div><div class="l">Utilization</div><div class="t">Top 5 of 93 company-wide</div></div>
 <div class="kpi"><div class="n">1,422</div><div class="l">Billable hours</div><div class="t">#2 of 93 company-wide</div></div>
-<div class="kpi"><div class="n">89</div><div class="l">Repositories touched</div><div class="t">2.8× peer average</div></div>
-<div class="kpi"><div class="n">1,462</div><div class="l">Implementation commits</div><div class="t">2.4× peer average</div></div>
+<div class="kpi"><div class="n">89</div><div class="l">Repositories touched</div><div class="t">GitHub activity footprint</div></div>
+<div class="kpi"><div class="n">1,462</div><div class="l">Implementation commits</div><div class="t">Non-merge GitHub commits</div></div>
 </div>
 <div class="source-label">Sources</div>
 <div class="reveal srcgrid">
@@ -265,17 +265,15 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 </section>
 
 <section class="sect" id="github">
-<div class="shead reveal"><div class="eyebrow">04 · Source</div><h2 class="h2">GitHub — implementation output</h2><p class="sub">Twelve months across the full <span class="mono">trimarkdigital</span> organization. Because not all work lands in GitHub and small commits do not equal large features, this is best read as a supporting signal for implementation volume, repo breadth and sustained hands-on work.</p></div>
-<div class="panel reveal"><div class="legend"><div class="lg"><span class="sw me"></span>Me</div><div class="lg"><span class="sw pr"></span>Peers</div><div class="ptitle" style="margin:0 0 0 auto">Non-merge commits</div></div>
-<div class="chart" data-chart="github"></div></div>
-<div class="panel reveal mt14"><table class="tbl"><thead><tr data-table-head="github"><th class="l">Developer</th></tr></thead><tbody data-table-body="github"></tbody></table>
-<div class="fn"><b>‡ Apples to apples.</b> “Commits” counts non-merge commits only. Merge commits are auto-generated when a pull request lands, so they’re excluded — otherwise my PR workflow would add ~330 commits that peers committing directly to <i>main</i> never accrue. Non-merge commits compare hand-written implementation work on equal footing. This only compares GitHub behavior; it does not include commits made to Bitbucket, or features that were not saved to a repo, such as HubSpot page builds and module work.</div></div>
+<div class="shead reveal"><div class="eyebrow">04 · Source</div><h2 class="h2">GitHub — implementation output</h2><p class="sub">Twelve months across the full <span class="mono">trimarkdigital</span> organization. There is not a good apples-to-apples way to compare these numbers: a commit can be tiny or substantial, different people commit at different granularity, and not all work happens in GitHub.</p></div>
+<div class="panel reveal"><table class="tbl"><thead><tr data-table-head="github"><th class="l">Metric</th></tr></thead><tbody data-table-body="github"></tbody></table>
+<div class="fn"><b>Activity footprint, not a ranking.</b> These counts exclude merge commits and only reflect work saved to GitHub. They do not include commits made to Bitbucket, direct CMS work, HubSpot page/module builds, or other implementation that never lands in a repository. I include them as context for sustained hands-on work and repo breadth, not as a peer comparison.</div></div>
 </section>
 
 <section class="sect" id="bottom">
 <div class="shead reveal"><div class="eyebrow">05 · Context</div><h2 class="h2">The bottom line</h2><p class="sub">The numbers can speak to how much I produced — not how well.</p></div>
 <div class="quote reveal">The numbers above can only speak to how much I produced — not how well. They also don’t capture the fact that I almost always meet my deadlines. For the quality of the work, the best people to ask are <b>Robert, Pete, Matt, Alex, Dani, or Kimberly.</b> Robert is probably the best situated — he has reviewed more than 100 of my pull requests.</div>
-<div class="srcnote reveal">Sources: Harvest users report (Jun 2025–Jun 2026), Basecamp name-search export (identical six-week window per person), Breeze PR history &amp; CHANGELOG, and trimarkdigital GitHub org (author email/login). Harvest, Basecamp and GitHub peer averages use the same active development-peer set — Robert Povelones, Juan Ibanes and Daniel Strong — averaged; Jon (departed) and Eric excluded. The GitHub comparison intentionally omits merged-PR counts, since several peers commit directly to main/deploy and author few PRs. Basecamp figures count records each person authored within the same window and hit a 10,000-result ceiling, so they reflect recent breadth rather than a full-year total.</div>
+<div class="srcnote reveal">Sources: Harvest users report (Jun 2025–Jun 2026), Basecamp name-search export (identical six-week window per person), Breeze PR history &amp; CHANGELOG, and trimarkdigital GitHub org (author email/login). Harvest and Basecamp peer averages use the same active development-peer set — Robert Povelones, Juan Ibanes and Daniel Strong — averaged; Jon (departed) and Eric excluded. GitHub figures are activity counts only, because commit size, commit habits and non-GitHub work make reliable peer comparison weak. Basecamp figures count records each person authored within the same window and hit a 10,000-result ceiling, so they reflect recent breadth rather than a full-year total.</div>
 </section>
 </main>
 </div>
@@ -283,10 +281,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui
 
 const data = {
   github: [
-    { name: 'Dan Keech', sub: 'dkeech', isMe: true, commits: 1794, nonMerge: 1462, days: 207, repos: 89 },
-    { name: 'Robert Povelones', sub: 'rpovelones', commits: 923, nonMerge: 772, days: 169, repos: 23 },
-    { name: 'Juan Ibanes', sub: 'juanibanes', commits: 562, nonMerge: 561, days: 171, repos: 30 },
-    { name: 'Daniel Strong', sub: 'dstrong462', commits: 459, nonMerge: 459, days: 165, repos: 43 }
+    { name: 'Dan Keech', sub: 'dkeech', isMe: true, commits: 1794, nonMerge: 1462, days: 207, repos: 89 }
   ],
   harvest: [
     { name: 'Dan Keech', isMe: true, total: 1630.3, billable: 1421.9, util: 78.080 },
@@ -342,25 +337,13 @@ function tableRows(table, rows) {
 
 function renderGithub() {
   const me = data.github[0];
-  const peers = data.github.filter(row => !row.isMe);
-  const peerNonMerge = avg(peers, 'nonMerge');
-  const peerDays = avg(peers, 'days');
-  const peerRepos = avg(peers, 'repos');
-  const bars = [
-    { name: 'Me', value: fmt(me.nonMerge), width: '100%', me: 'me' },
-    { name: 'Peer average', value: fmt(peerNonMerge), width: (peerNonMerge / me.nonMerge * 100).toFixed(1) + '%' }
-  ];
-  document.querySelector('[data-chart="github"]').innerHTML = bars.map(chartRow).join('');
-
   tableHeader('github', [
-    { label: 'Commits ‡', key: 'nonMerge' },
-    { label: 'Active days', key: 'days' },
-    { label: 'Repos', key: 'repos' }
+    { label: 'Value', key: 'value' }
   ]);
   const rows = [
-    { cls: 'me', name: 'Me', sub: 'dkeech', cells: [fmt(me.nonMerge), fmt(me.days), me.repos] },
-    { cls: 'avg', name: 'Peer average', cells: [fmt(peerNonMerge), fmt(peerDays), Math.round(peerRepos)] },
-    { cls: 'mult', name: 'My multiple', cells: [(me.nonMerge / peerNonMerge).toFixed(1) + '×', (me.days / peerDays).toFixed(1) + '×', (me.repos / peerRepos).toFixed(1) + '×'] }
+    { cls: 'me', name: 'Non-merge commits', cells: [fmt(me.nonMerge)] },
+    { cls: 'me', name: 'Active GitHub days', cells: [fmt(me.days)] },
+    { cls: 'me', name: 'Repositories touched', cells: [me.repos] }
   ];
   tableRows('github', rows);
 }
